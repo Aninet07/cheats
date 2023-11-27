@@ -1,0 +1,117 @@
+// Employee class
+class Employee {
+    private String employeeName;
+    private double basicSalary;
+
+    // Parameterized constructor for Employee class
+    public Employee(String employeeName, double basicSalary) {
+        this.employeeName = employeeName;
+        this.basicSalary = basicSalary;
+    }
+
+    // Method to get the salary of an employee
+    public double getSalary() {
+        return basicSalary;
+    }
+}
+
+// Manager class extending Employee
+class Manager extends Employee {
+    private double travelAllowance;
+    private double houseRentAllowance;
+
+    // Parameterized constructor for Manager class
+    public Manager(String employeeName, double basicSalary, double travelAllowance, double houseRentAllowance) {
+        super(employeeName, basicSalary);
+        this.travelAllowance = travelAllowance;
+        this.houseRentAllowance = houseRentAllowance;
+    }
+
+    // Override the getSalary method for Manager
+    @Override
+    public double getSalary() {
+        // Manager's salary includes basic salary, travel allowance, and house rent allowance
+        return super.getSalary() + travelAllowance + houseRentAllowance;
+    }
+}
+
+public class EmployeeManagerExample {
+    public static void main(String[] args) {
+        // Create an Employee object
+        Employee employee = new Employee("John Doe", 50000);
+
+        // Display the salary of the employee
+        System.out.println("Employee Salary: $" + employee.getSalary());
+
+        // Create a Manager object
+        Manager manager = new Manager("Jane Smith", 60000, 5000, 7000);
+
+        // Display the salary of the manager
+        System.out.println("Manager Salary: $" + manager.getSalary());
+    }
+}
+-----------------------------------------------------------------------------------------------------
+import java.io.File;
+import java.util.Scanner;
+
+public class FileOperation {
+
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Please provide a file or directory path as a command line argument.");
+            return;
+        }
+
+        String path = args[0];
+        File fileOrDirectory = new File(path);
+
+        if (fileOrDirectory.exists()) {
+            if (fileOrDirectory.isDirectory()) {
+                deleteTextFiles(fileOrDirectory);
+            } else if (fileOrDirectory.isFile()) {
+                displayFileDetails(fileOrDirectory);
+            } else {
+                System.out.println("Invalid path. The provided path is neither a file nor a directory.");
+            }
+        } else {
+            System.out.println("The specified file or directory does not exist.");
+        }
+    }
+
+    private static void deleteTextFiles(File directory) {
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            int deletedCount = 0;
+
+            for (File file : files) {
+                if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
+                    System.out.println("Delete file: " + file.getName() + "? (y/n)");
+                    Scanner scanner = new Scanner(System.in);
+                    String confirmation = scanner.nextLine().toLowerCase();
+
+                    if (confirmation.equals("y")) {
+                        if (file.delete()) {
+                            System.out.println("File deleted: " + file.getName());
+                            deletedCount++;
+                        } else {
+                            System.out.println("Unable to delete file: " + file.getName());
+                        }
+                    }
+                }
+            }
+
+            System.out.println("Number of text files deleted: " + deletedCount);
+        } else {
+            System.out.println("The specified directory is empty.");
+        }
+    }
+
+    private static void displayFileDetails(File file) {
+        System.out.println("File details:");
+        System.out.println("Name: " + file.getName());
+        System.out.println("Path: " + file.getAbsolutePath());
+        System.out.println("Size: " + file.length() + " bytes");
+        System.out.println("Last Modified: " + file.lastModified());
+    }
+}

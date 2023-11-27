@@ -1,0 +1,183 @@
+import java.util.Scanner;
+
+class College {
+    protected int cno;
+    protected String cname;
+    protected String caddr;
+
+    // Parameterized constructor for College class
+    public College(int cno, String cname, String caddr) {
+        this.cno = cno;
+        this.cname = cname;
+        this.caddr = caddr;
+    }
+
+    // Method to display college details
+    public void displayCollegeDetails() {
+        System.out.println("College Details:");
+        System.out.println("College Number: " + cno);
+        System.out.println("College Name: " + cname);
+        System.out.println("College Address: " + caddr);
+    }
+}
+
+class Department extends College {
+    private int dno;
+    private String dname;
+
+    // Parameterized constructor for Department class
+    public Department(int cno, String cname, String caddr, int dno, String dname) {
+        super(cno, cname, caddr);
+        this.dno = dno;
+        this.dname = dname;
+    }
+
+    // Method to display department details along with college details
+    public void displayDepartmentDetails() {
+        displayCollegeDetails();
+        System.out.println("Department Details:");
+        System.out.println("Department Number: " + dno);
+        System.out.println("Department Name: " + dname);
+    }
+}
+
+public class CollegeDepartmentExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input college details
+        System.out.print("Enter College Number: ");
+        int cno = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+        System.out.print("Enter College Name: ");
+        String cname = scanner.nextLine();
+        System.out.print("Enter College Address: ");
+        String caddr = scanner.nextLine();
+
+        // Input department details
+        System.out.print("Enter Department Number: ");
+        int dno = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+        System.out.print("Enter Department Name: ");
+        String dname = scanner.nextLine();
+
+        // Create Department object
+        Department myDepartment = new Department(cno, cname, caddr, dno, dname);
+
+        // Display department details along with college details
+        myDepartment.displayDepartmentDetails();
+
+        scanner.close();
+    }
+}
+----------------------------------------------------------------------------------------------
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class slip12 extends JFrame implements ActionListener {
+
+    String msg = " ";
+    int v1, v2, result;
+    JTextField t;
+    JButton b[] = new JButton[10];
+    JButton add, sub, mul, div, clear, equals;
+    char choice;
+    JPanel p, p1;
+
+    public slip12() {
+        setLayout(new BorderLayout());
+
+        p = new JPanel();
+        t = new JTextField(20);
+        p.add(t);
+
+        p1 = new JPanel();
+        p1.setLayout(new GridLayout(5, 4));
+
+        for (int i = 0; i < 10; i++) {
+            b[i] = new JButton("" + i);
+            p1.add(b[i]);
+            b[i].addActionListener(this);
+        }
+
+        equals = new JButton("=");
+        add = new JButton("+");
+        sub = new JButton("-");
+        mul = new JButton("*");
+        div = new JButton("/");
+        clear = new JButton("C");
+
+        p1.add(equals);
+        p1.add(add);
+        p1.add(sub);
+        p1.add(mul);
+        p1.add(div);
+        p1.add(clear);
+
+        add(p, BorderLayout.NORTH);
+        add(p1);
+
+        add.addActionListener(this);
+        sub.addActionListener(this);
+        mul.addActionListener(this);
+        div.addActionListener(this);
+        clear.addActionListener(this);
+        equals.addActionListener(this);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Calculator");
+        setSize(300, 400);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+        String str = ae.getActionCommand();
+        char ch = str.charAt(0);
+
+        if (Character.isDigit(ch)) {
+            t.setText(t.getText() + str);
+        } else if (str.equals(".")) {
+            if (!t.getText().contains(".")) {
+                t.setText(t.getText() + str);
+            }
+        } else if (str.equals("=")) {
+            v2 = Integer.parseInt(t.getText());
+            calculateResult();
+            t.setText(String.valueOf(result));
+        } else if (str.equals("C")) {
+            t.setText("");
+        } else {
+            v1 = Integer.parseInt(t.getText());
+            choice = ch;
+            t.setText("");
+        }
+    }
+
+    private void calculateResult() {
+        switch (choice) {
+            case '+':
+                result = v1 + v2;
+                break;
+            case '-':
+                result = v1 - v2;
+                break;
+            case '*':
+                result = v1 * v2;
+                break;
+            case '/':
+                if (v2 != 0) {
+                    result = v1 / v2;
+                } else {
+                    t.setText("Error");
+                    return;
+                }
+                break;
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new slip12());
+    }
+}

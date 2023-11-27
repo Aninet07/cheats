@@ -1,0 +1,147 @@
+import java.util.Scanner;
+
+public class ArrayTranspose {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input the number of rows and columns
+        System.out.print("Enter the number of rows: ");
+        int rows = scanner.nextInt();
+        System.out.print("Enter the number of columns: ");
+        int columns = scanner.nextInt();
+
+        // Input the elements of the 2D array
+        int[][] originalArray = new int[rows][columns];
+        System.out.println("Enter the elements of the array:");
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                System.out.print("Enter element at position [" + i + "][" + j + "]: ");
+                originalArray[i][j] = scanner.nextInt();
+            }
+        }
+
+        // Print the original array
+        System.out.println("Original Array:");
+        printArray(originalArray);
+
+        // Transpose the array (swap rows and columns)
+        int[][] transposedArray = transposeArray(originalArray);
+
+        // Print the transposed array
+        System.out.println("Array after transposing (swapping rows and columns):");
+        printArray(transposedArray);
+
+        scanner.close();
+    }
+
+    public static void printArray(int[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                System.out.print(array[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static int[][] transposeArray(int[][] array) {
+        int rows = array.length;
+        int columns = array[0].length;
+
+        int[][] transposedArray = new int[columns][rows];
+
+        for (int i = 0; i < columns; i++) {
+            for (int j = 0; j < rows; j++) {
+                transposedArray[i][j] = array[j][i];
+            }
+        }
+
+        return transposedArray;
+    }
+}
+----------------------------------------------------------------------------------------------
+import java.awt.*;
+import java.awt.event.*;
+
+class LoginScreen extends Frame implements ActionListener {
+    private TextField usernameField, passwordField;
+    private Button loginButton, clearButton;
+    private int loginAttempts = 0;
+
+    public LoginScreen() {
+        setTitle("Login Screen");
+        setSize(300, 200);
+        setLayout(new GridLayout(4, 2));
+
+        Label usernameLabel = new Label("Username:");
+        usernameField = new TextField();
+        Label passwordLabel = new Label("Password:");
+        passwordField = new TextField();
+        passwordField.setEchoChar('*');
+
+        loginButton = new Button("Login");
+        clearButton = new Button("Clear");
+
+        add(usernameLabel);
+        add(usernameField);
+        add(passwordLabel);
+        add(passwordField);
+        add(loginButton);
+        add(clearButton);
+
+        loginButton.addActionListener(this);
+        clearButton.addActionListener(this);
+
+        // Close the window on exit
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == loginButton) {
+            try {
+                performLogin();
+            } catch (Exception ex) {
+                showMessage(ex.getMessage());
+            }
+        } else if (e.getSource() == clearButton) {
+            clearFields();
+        }
+    }
+
+    private void performLogin() throws Exception {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        if (!username.equals(password)) {
+            loginAttempts++;
+            if (loginAttempts >= 3) {
+                throw new Exception("Login failed. Maximum attempts reached.");
+            } else {
+                throw new Exception("Username and password do not match. Attempts left: " + (3 - loginAttempts));
+            }
+        } else {
+            showMessage("Login successful!");
+        }
+    }
+
+    private void clearFields() {
+        usernameField.setText("");
+        passwordField.setText("");
+        loginAttempts = 0;
+        showMessage("Fields cleared.");
+    }
+
+    private void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+
+    public static void main(String[] args) {
+        LoginScreen loginScreen = new LoginScreen();
+        loginScreen.setVisible(true);
+    }
+}

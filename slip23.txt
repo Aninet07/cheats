@@ -1,0 +1,119 @@
+public class MyNumber {
+    private int number;
+
+    // Default constructor to initialize the number to 0
+    public MyNumber() {
+        this.number = 0;
+    }
+
+    // Parameterized constructor to initialize the number to a given value
+    public MyNumber(int number) {
+        this.number = number;
+    }
+
+    // Method to check if the number is negative
+    public boolean isNegative() {
+        return number < 0;
+    }
+
+    // Method to check if the number is positive
+    public boolean isPositive() {
+        return number > 0;
+    }
+
+    // Method to check if the number is zero
+    public boolean isZero() {
+        return number == 0;
+    }
+
+    // Method to check if the number is odd
+    public boolean isOdd() {
+        return number % 2 != 0;
+    }
+
+    // Method to check if the number is even
+    public boolean isEven() {
+        return number % 2 == 0;
+    }
+
+    public static void main(String[] args) {
+        // Check if a command line argument is provided
+        if (args.length > 0) {
+            // Convert the command line argument to an integer
+            int value = Integer.parseInt(args[0]);
+
+            // Create an object of MyNumber with the provided value
+            MyNumber myNumber = new MyNumber(value);
+
+            // Display the properties of the number
+            System.out.println("Number: " + myNumber.number);
+            System.out.println("Is Negative? " + myNumber.isNegative());
+            System.out.println("Is Positive? " + myNumber.isPositive());
+            System.out.println("Is Zero? " + myNumber.isZero());
+            System.out.println("Is Odd? " + myNumber.isOdd());
+            System.out.println("Is Even? " + myNumber.isEven());
+        } else {
+            System.out.println("Please provide a command line argument.");
+        }
+    }
+}
+----------------------------------------------------------------------------------------
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+
+class Slip23 extends KeyAdapter {
+
+    private JLabel l1, l2, l3;
+    private JTextField t1, t2, t3;
+
+    Slip23() {
+        JFrame ob = new JFrame();
+        l1 = new JLabel("US Dollars");
+        l2 = new JLabel("Singapore Dollars");
+        l3 = new JLabel("Euros");
+        t1 = new JTextField(10);
+        t2 = new JTextField(10);
+        t3 = new JTextField(10);
+
+        ob.add(l1);
+        ob.add(t1);
+        ob.add(l2);
+        ob.add(t2);
+        ob.add(l3);
+        ob.add(t3);
+
+        ob.setVisible(true);
+
+        t1.addKeyListener(this);
+
+        ob.setLayout(new FlowLayout());
+        ob.setSize(400, 400);
+        ob.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void keyReleased(KeyEvent ke) {
+        try {
+            double USD = Double.parseDouble(t1.getText());
+            double S = 1.41;
+            double E = 0.92;
+
+            double SGD = USD * S;
+            double Euro = USD * E;
+
+            // Format the result to display only two decimal places
+            DecimalFormat df = new DecimalFormat("#.##");
+            t2.setText(df.format(SGD));
+            t3.setText(df.format(Euro));
+
+        } catch (Exception e) {
+            System.out.println("Enter values in the text box");
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Slip23());
+    }
+}

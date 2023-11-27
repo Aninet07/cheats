@@ -1,0 +1,126 @@
+import java.util.Scanner;
+
+// User-defined exception for invalid date
+class InvalidDateException extends Exception {
+    public InvalidDateException(String message) {
+        super(message);
+    }
+}
+
+// MyDate class
+class MyDate {
+    private int day;
+    private int month;
+    private int year;
+
+    // Method to accept a MyDate object and handle invalid dates
+    public void acceptDate() throws InvalidDateException {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter day (dd): ");
+        day = scanner.nextInt();
+
+        System.out.print("Enter month (mm): ");
+        month = scanner.nextInt();
+
+        System.out.print("Enter year (yyyy): ");
+        year = scanner.nextInt();
+
+        // Validate the date
+        if (!isValidDate()) {
+            throw new InvalidDateException("Invalid date entered.");
+        }
+    }
+
+    // Method to display a MyDate object
+    public void displayDate() {
+        System.out.println("Date: " + day + "/" + month + "/" + year);
+    }
+
+    // Private method to check if the date is valid
+    private boolean isValidDate() {
+        if (month < 1 || month > 12) {
+            return false;
+        }
+
+        int[] daysInMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        // Check for leap year
+        if (month == 2 && isLeapYear()) {
+            daysInMonth[2] = 29;
+        }
+
+        return day >= 1 && day <= daysInMonth[month] && year > 0;
+    }
+
+    // Private method to check if the year is a leap year
+    private boolean isLeapYear() {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+}
+
+public class MyDateExample {
+    public static void main(String[] args) {
+        MyDate myDate = new MyDate();
+
+        try {
+            // Accept and display the date
+            myDate.acceptDate();
+            myDate.displayDate();
+        } catch (InvalidDateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+---------------------------------------------------------------------------------------
+public class Employee {
+    private int id;
+    private String name;
+    private String deptName;
+    private double salary;
+    private static int objectCount = 0; // static variable to keep track of the object count
+
+    // Default constructor
+    public Employee() {
+        this.id = 0;
+        this.name = "Unknown";
+        this.deptName = "Unknown";
+        this.salary = 0.0;
+        objectCount++;
+        displayObjectCount();
+    }
+
+    // Parameterized constructor
+    public Employee(int id, String name, String deptName, double salary) {
+        this.id = id;
+        this.name = name;
+        this.deptName = deptName;
+        this.salary = salary;
+        objectCount++;
+        displayObjectCount();
+    }
+
+    // Static method to display object count
+    public static void displayObjectCount() {
+        System.out.println("Object Count: " + objectCount);
+    }
+
+    // Method to display the contents of the object
+    public void displayEmployeeDetails() {
+        System.out.println("Employee ID: " + id);
+        System.out.println("Employee Name: " + name);
+        System.out.println("Department Name: " + deptName);
+        System.out.println("Salary: " + salary);
+        System.out.println("-----------------------------");
+    }
+
+    public static void main(String[] args) {
+        // Create objects using the parameterized constructor
+        Employee employee1 = new Employee(1, "John Doe", "IT", 50000.0);
+        Employee employee2 = new Employee(2, "Alice Smith", "HR", 45000.0);
+
+        // Display the contents of each object
+        employee1.displayEmployeeDetails();
+        employee2.displayEmployeeDetails();
+    }
+}

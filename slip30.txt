@@ -1,0 +1,129 @@
+import java.util.Scanner;
+
+class Person {
+    private String personName;
+    private String aadharNo;
+    private String panNo;
+
+    // Parameterized constructor for Person class
+    public Person(String personName, String aadharNo, String panNo) {
+        this.personName = personName;
+        this.aadharNo = aadharNo;
+        this.panNo = panNo;
+    }
+
+    // Method to display information of the person
+    public void displayPersonInfo() {
+        System.out.println("Person Information:");
+        System.out.println("Person Name: " + this.personName);
+        System.out.println("Aadhar Number: " + this.aadharNo);
+        System.out.println("PAN Number: " + this.panNo);
+        System.out.println();
+    }
+}
+
+public class PersonInfoExample {
+    public static void main(String[] args) {
+        // Create an array to store 5 Person objects
+        Person[] persons = new Person[5];
+
+        // Accept information for 5 objects
+        for (int i = 0; i < 5; i++) {
+            persons[i] = getPersonInfoFromUser(i + 1);
+        }
+
+        // Display information for all 5 objects
+        for (Person person : persons) {
+            person.displayPersonInfo();
+        }
+    }
+
+    private static Person getPersonInfoFromUser(int personNumber) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter information for Person " + personNumber + ":");
+        System.out.print("Enter Person Name: ");
+        String personName = scanner.nextLine();
+
+        System.out.print("Enter Aadhar Number: ");
+        String aadharNo = scanner.nextLine();
+
+        System.out.print("Enter PAN Number: ");
+        String panNo = scanner.nextLine();
+
+        // Create and return a Person object with the provided information
+        return new Person(personName, aadharNo, panNo);
+    }
+}
+----------------------------------------------------------------------------------------------
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class IntegerDivisionUI extends JFrame {
+
+    private JTextField number1Field, number2Field, resultField;
+
+    public IntegerDivisionUI() {
+        // Set up the frame
+        setTitle("Integer Division Calculator");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 150);
+        setLayout(new GridLayout(4, 2));
+
+        // Create components
+        JLabel number1Label = new JLabel("Number1:");
+        number1Field = new JTextField();
+        JLabel number2Label = new JLabel("Number2:");
+        number2Field = new JTextField();
+        JButton divideButton = new JButton("Divide");
+        resultField = new JTextField("Result will be displayed here");
+        resultField.setEditable(false);
+
+        // Add components to the frame
+        add(number1Label);
+        add(number1Field);
+        add(number2Label);
+        add(number2Field);
+        add(new JLabel()); // Empty label
+        add(divideButton);
+        add(new JLabel()); // Empty label
+        add(resultField);
+
+        // Add action listener to the divide button
+        divideButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int number1 = Integer.parseInt(number1Field.getText());
+                    int number2 = Integer.parseInt(number2Field.getText());
+
+                    if (number2 == 0) {
+                        throw new ArithmeticException("Cannot divide by zero.");
+                    }
+
+                    int result = number1 / number2;
+                    resultField.setText("Result: " + result);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(IntegerDivisionUI.this,
+                            "Please enter valid integers for Number1 and Number2.",
+                            "NumberFormatException", JOptionPane.ERROR_MESSAGE);
+                } catch (ArithmeticException ex) {
+                    JOptionPane.showMessageDialog(IntegerDivisionUI.this,
+                            "Cannot divide by zero.",
+                            "ArithmeticException", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new IntegerDivisionUI().setVisible(true);
+            }
+        });
+    }
+}

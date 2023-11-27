@@ -1,0 +1,198 @@
+
+import java.util.Scanner;
+
+// Superclass Customer
+class Customer {
+    protected String name;
+    protected String phoneNumber;
+
+    // Parameterized constructor for Customer class
+    public Customer(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
+    // Method to read customer details
+    public void readCustomerDetails() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Customer Name: ");
+        name = scanner.nextLine();
+        System.out.print("Enter Phone Number: ");
+        phoneNumber = scanner.nextLine();
+    }
+
+    // Method to display customer details
+    public void displayCustomerDetails() {
+        System.out.println("Customer Name: " + name);
+        System.out.println("Phone Number: " + phoneNumber);
+    }
+}
+
+// Derived class Depositor from Customer
+class Depositor extends Customer {
+    protected int accNo;
+    protected double balance;
+
+    // Parameterized constructor for Depositor class
+    public Depositor(String name, String phoneNumber, int accNo, double balance) {
+        super(name, phoneNumber);
+        this.accNo = accNo;
+        this.balance = balance;
+    }
+
+    // Method to read depositor details
+    public void readDepositorDetails() {
+        readCustomerDetails(); // Call the readCustomerDetails method from the superclass
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Account Number: ");
+        accNo = scanner.nextInt();
+        System.out.print("Enter Balance: ");
+        balance = scanner.nextDouble();
+    }
+
+    // Method to display depositor details
+    public void displayDepositorDetails() {
+        displayCustomerDetails(); // Call the displayCustomerDetails method from the superclass
+        System.out.println("Account Number: " + accNo);
+        System.out.println("Balance: $" + balance);
+    }
+}
+
+// Derived class Borrower from Depositor
+class Borrower extends Depositor {
+    protected int loanNo;
+    protected double loanAmt;
+
+    // Parameterized constructor for Borrower class
+    public Borrower(String name, String phoneNumber, int accNo, double balance, int loanNo, double loanAmt) {
+        super(name, phoneNumber, accNo, balance);
+        this.loanNo = loanNo;
+        this.loanAmt = loanAmt;
+    }
+
+    // Method to read borrower details
+    public void readBorrowerDetails() {
+        readDepositorDetails(); // Call the readDepositorDetails method from the superclass
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Loan Number: ");
+        loanNo = scanner.nextInt();
+        System.out.print("Enter Loan Amount: ");
+        loanAmt = scanner.nextDouble();
+    }
+
+    // Method to display borrower details
+    public void displayBorrowerDetails() {
+        displayDepositorDetails(); // Call the displayDepositorDetails method from the superclass
+        System.out.println("Loan Number: " + loanNo);
+        System.out.println("Loan Amount: $" + loanAmt);
+    }
+}
+
+public class CustomerHierarchy {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input the number of customers (n)
+        System.out.print("Enter the number of customers: ");
+        int n = scanner.nextInt();
+
+        // Create an array to store customer objects
+        Borrower[] customers = new Borrower[n];
+
+        // Read and display details for each customer
+        for (int i = 0; i < n; i++) {
+            customers[i] = new Borrower("", "", 0, 0, 0, 0); // Initialize with default values
+            System.out.println("\nEnter details for Customer " + (i + 1) + ":");
+            customers[i].readBorrowerDetails();
+        }
+
+        // Display details for each customer
+        System.out.println("\nDetails of Customers:");
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nDetails for Customer " + (i + 1) + ":");
+            customers[i].displayBorrowerDetails();
+        }
+
+        scanner.close();
+    }
+}
+
+-------------------------------------------------------------------------------------------
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class StringOperationGUI extends JFrame {
+    private JTextField textField1, textField2, textField3;
+    private JButton concatButton, reverseButton;
+
+    public StringOperationGUI() {
+        // Set layout to null for manual component placement
+        setLayout(null);
+
+        // Create and place text boxes
+        textField1 = new JTextField();
+        textField2 = new JTextField();
+        textField3 = new JTextField();
+        textField1.setBounds(50, 30, 150, 20);
+        textField2.setBounds(50, 60, 150, 20);
+        textField3.setBounds(50, 90, 250, 20);
+
+        // Create and place buttons
+        concatButton = new JButton("Concatenate");
+        reverseButton = new JButton("Reverse");
+        concatButton.setBounds(220, 30, 120, 20);
+        reverseButton.setBounds(220, 60, 120, 20);
+
+        // Add components to the frame
+        add(textField1);
+        add(textField2);
+        add(textField3);
+        add(concatButton);
+        add(reverseButton);
+
+        // Attach ActionListener to buttons
+        concatButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                concatenateStrings();
+            }
+        });
+
+        reverseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reverseString();
+            }
+        });
+
+        // Set frame properties
+        setTitle("String Operations");
+        setSize(400, 160);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void concatenateStrings() {
+        String text1 = textField1.getText();
+        String text2 = textField2.getText();
+        String result = text1 + text2;
+        textField3.setText(result);
+    }
+
+    private void reverseString() {
+        String textToReverse = textField3.getText();
+        StringBuilder reversedText = new StringBuilder(textToReverse).reverse();
+        textField3.setText(reversedText.toString());
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new StringOperationGUI();
+            }
+        });
+    }
+}

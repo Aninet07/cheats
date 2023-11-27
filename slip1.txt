@@ -1,0 +1,98 @@
+public class PrimeNumbers {
+
+    public static boolean isPrime(int num) {
+        if (num < 2) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void printPrimes(int[] arr) {
+        System.out.print("Prime numbers in the array: ");
+        for (int num : arr) {
+            if (isPrime(num)) {
+                System.out.print(num + " ");
+            }
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        // Check if there are command line arguments
+        if (args.length < 1) {
+            System.out.println("Usage: java PrimeNumbers <element1> <element2> ... <elementn>");
+        } else {
+            // Convert command line arguments to an array of integers
+            int[] elements = new int[args.length];
+            for (int i = 0; i < args.length; i++) {
+                elements[i] = Integer.parseInt(args[i]);
+            }
+
+            System.out.print("Input array: ");
+            for (int element : elements) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+
+            printPrimes(elements);
+        }
+    }
+}
+-------------------------------------------------------------------------------------------------------------
+
+abstract class Staff {
+    protected int id;
+    protected String name;
+
+    // Parameterized constructor
+    public Staff(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // Abstract method to be implemented by subclasses
+    public abstract void displayDetails();
+}
+
+class OfficeStaff extends Staff {
+    private String department;
+
+    // Parameterized constructor for OfficeStaff
+    public OfficeStaff(int id, String name, String department) {
+        super(id, name);
+        this.department = department;
+    }
+
+    // Implementation of abstract method from the superclass
+    @Override
+    public void displayDetails() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Department: " + department);
+        System.out.println("------------------------------");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        int n = 3; // Number of OfficeStaff objects to create
+
+        // Create an array to hold the OfficeStaff objects
+        OfficeStaff[] officeStaffArray = new OfficeStaff[n];
+
+        // Create n objects of OfficeStaff with different details
+        officeStaffArray[0] = new OfficeStaff(101, "John Doe", "HR");
+        officeStaffArray[1] = new OfficeStaff(102, "Jane Smith", "Finance");
+        officeStaffArray[2] = new OfficeStaff(103, "Bob Johnson", "IT");
+
+        // Display details of all OfficeStaff objects
+        for (OfficeStaff staff : officeStaffArray) {
+            staff.displayDetails();
+        }
+    }
+}

@@ -1,0 +1,91 @@
+public class BMICalculator {
+
+    public static double calculateBMI(double weight, double height) {
+        // BMI formula: BMI = weight (in kg) / (height * height) (in meters)
+        return weight / (height * height);
+    }
+
+    public static void main(String[] args) {
+        // Check if there are enough command line arguments
+        if (args.length < 4) {
+            System.out.println("Usage: java BMICalculator <FirstName> <LastName> <WeightInKgs> <HeightInMeters>");
+        } else {
+            // Extract data from command line arguments
+            String firstName = args[0];
+            String lastName = args[1];
+            double weight = Double.parseDouble(args[2]);
+            double height = Double.parseDouble(args[3]);
+
+            // Calculate BMI
+            double bmi = calculateBMI(weight, height);
+
+            // Display results
+            System.out.println("Name: " + firstName + " " + lastName);
+            System.out.println("Weight: " + weight + " kg");
+            System.out.println("Height: " + height + " meters");
+            System.out.println("BMI: " + bmi);
+        }
+    }
+}
+-----------------------------------------------------------------------------------------------------
+import java.util.Arrays;
+
+public class CricketPlayer {
+    private String name;
+    private int no_of_innings;
+    private int no_of_times_notout;
+    private int total_runs;
+    private double bat_avg;
+
+    public CricketPlayer(String name, int no_of_innings, int no_of_times_notout, int total_runs) {
+        this.name = name;
+        this.no_of_innings = no_of_innings;
+        this.no_of_times_notout = no_of_times_notout;
+        this.total_runs = total_runs;
+        this.bat_avg = 0;
+    }
+
+    public static double avg(int runs, int innings, int notout) {
+        if (innings - notout != 0) {
+            return (double) runs / (innings - notout);
+        } else {
+            return 0;
+        }
+    }
+
+    public static void sort(CricketPlayer[] players) {
+        Arrays.sort(players, (player1, player2) -> Double.compare(player2.bat_avg, player1.bat_avg));
+    }
+
+    public void calculateAverage() {
+        this.bat_avg = avg(this.total_runs, this.no_of_innings, this.no_of_times_notout);
+    }
+
+    public void displayPlayerDetails() {
+        System.out.printf("Name: %s, Innings: %d, Not Out: %d, Total Runs: %d, Batting Average: %.2f%n",
+                this.name, this.no_of_innings, this.no_of_times_notout, this.total_runs, this.bat_avg);
+    }
+
+    public static void main(String[] args) {
+        int n = 3;  // Number of players
+        CricketPlayer[] playersArray = new CricketPlayer[n];
+
+        // Creating player objects
+        playersArray[0] = new CricketPlayer("Player1", 50, 5, 1500);
+        playersArray[1] = new CricketPlayer("Player2", 45, 3, 1200);
+        playersArray[2] = new CricketPlayer("Player3", 60, 8, 2000);
+
+        // Calculate batting average for each player
+        for (CricketPlayer player : playersArray) {
+            player.calculateAverage();
+        }
+
+        // Sort players based on batting average
+        sort(playersArray);
+
+        // Display player details in sorted order
+        for (CricketPlayer player : playersArray) {
+            player.displayPlayerDetails();
+        }
+    }
+}

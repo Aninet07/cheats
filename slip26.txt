@@ -1,0 +1,164 @@
+class Item {
+    private static int objectCount = 0; // Static member to keep track of object count
+    private int item_number;
+    private String item_name;
+    private double item_price;
+
+    // Default constructor
+    public Item() {
+        objectCount++;
+    }
+
+    // Parameterized constructor
+    public Item(int item_number, String item_name, double item_price) {
+        this.item_number = item_number;
+        this.item_name = item_name;
+        this.item_price = item_price;
+        objectCount++;
+    }
+
+    // Static method to get the object count
+    public static int getObjectCount() {
+        return objectCount;
+    }
+
+    // Method to display the contents of the object
+    public void displayItemInfo() {
+        System.out.println("Item Information:");
+        System.out.println("Item Number: " + item_number);
+        System.out.println("Item Name: " + item_name);
+        System.out.println("Item Price: $" + item_price);
+    }
+}
+
+public class ItemExample {
+    public static void main(String[] args) {
+        // Create objects using the parameterized constructor
+        Item item1 = new Item(101, "Laptop", 999.99);
+        displayObjectCount();
+
+        Item item2 = new Item(202, "Smartphone", 499.99);
+        displayObjectCount();
+
+        // Display the contents of each object
+        item1.displayItemInfo();
+        System.out.println(); // Adding a newline for better formatting
+        item2.displayItemInfo();
+    }
+
+    // Method to display the object count
+    private static void displayObjectCount() {
+        System.out.println("Object Count: " + Item.getObjectCount());
+        System.out.println(); // Adding a newline for better formatting
+    }
+}
+----------------------------------------------------------------------------------
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+class Donor implements Serializable {
+    private String name;
+    private int age;
+    private String address;
+    private String contactNumber;
+    private String bloodGroup;
+    private Date lastDonationDate;
+
+    public Donor(String name, int age, String address, String contactNumber, String bloodGroup, String lastDonationDate) throws ParseException {
+        this.name = name;
+        this.age = age;
+        this.address = address;
+        this.contactNumber = contactNumber;
+        this.bloodGroup = bloodGroup;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        this.lastDonationDate = dateFormat.parse(lastDonationDate);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public String getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public Date getLastDonationDate() {
+        return lastDonationDate;
+    }
+}
+
+public class BloodDonorManagement {
+
+    public static void main(String[] args) {
+        // Create and write donor objects to a file
+        writeDonorsToFile();
+
+        // Read donors from the file and display those meeting the specified criteria
+        readAndDisplayDonors();
+    }
+
+    private static void writeDonorsToFile() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("donors.dat"))) {
+            // Create 'n' donor objects
+            Donor donor1 = new Donor("John Doe", 25, "Pune", "1234567890", "A+", "01/01/2022");
+            Donor donor2 = new Donor("Jane Smith", 30, "Pune", "9876543210", "B+", "15/02/2022");
+
+            // Write donors to the file
+            oos.writeObject(donor1);
+            oos.writeObject(donor2);
+
+            System.out.println("Donors written to the file successfully.");
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void readAndDisplayDonors() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("donors.dat"))) {
+            // Read donors from the file
+            while (true) {
+                try {
+                    Donor donor = (Donor) ois.readObject();
+                    displayDonorDetails(donor);
+                } catch (EOFException eofException) {
+                    break; // End of file reached
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void displayDonorDetails(Donor donor) {
+        // Display details of donors meeting the specified criteria
+        if (donor.getBloodGroup().equals("A+") && isSixMonthsAgo(donor.getLastDonationDate())) {
+            System.out.println("Name: " + donor.getName());
+            System.out.println("Age: " + donor.getAge());
+            System.out.println("Address: " + donor.getAddress());
+            System.out.println("Contact Number: " + donor.getContactNumber());
+            System.out.println("Blood Group: " + donor.getBloodGroup());
+            System.out.println("Last Donation Date: " + donor.getLastDonationDate());
+            System.out.println("-----------------------------");
+        }
+    }
+
+    private static boolean isSixMonthsAgo(Date lastDonationDate) {
+        // Check if the last donation was more than six months ago
+        Date sixMonthsAgo = new Date(System.currentTimeMillis() - (6 * 30 * 24 * 60 * 60 * 1000L));
+        return lastDonationDate.before(sixMonthsAgo);
+    }
+}

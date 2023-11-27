@@ -1,0 +1,135 @@
+import java.awt.BorderLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class BorderLayoutExample {
+    public static void main(String[] args) {
+        // Create a JFrame
+        JFrame frame = new JFrame("BorderLayout Example");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Create components
+        JButton btnNorth = new JButton("North");
+        JButton btnSouth = new JButton("South");
+        JButton btnEast = new JButton("East");
+        JButton btnWest = new JButton("West");
+        JTextField textField = new JTextField("Center Text Field");
+        JLabel label = new JLabel("This is a label");
+
+        // Create panels to hold components
+        JPanel northPanel = new JPanel();
+        northPanel.add(btnNorth);
+
+        JPanel southPanel = new JPanel();
+        southPanel.add(btnSouth);
+
+        JPanel eastPanel = new JPanel();
+        eastPanel.add(btnEast);
+
+        JPanel westPanel = new JPanel();
+        westPanel.add(btnWest);
+
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BorderLayout());
+        centerPanel.add(textField, BorderLayout.CENTER);
+        centerPanel.add(label, BorderLayout.SOUTH);
+
+        // Set layout manager for the frame
+        frame.setLayout(new BorderLayout());
+
+        // Add components to the frame in their respective regions
+        frame.add(northPanel, BorderLayout.NORTH);
+        frame.add(southPanel, BorderLayout.SOUTH);
+        frame.add(eastPanel, BorderLayout.EAST);
+        frame.add(westPanel, BorderLayout.WEST);
+        frame.add(centerPanel, BorderLayout.CENTER);
+
+        // Make the frame visible
+        frame.setVisible(true);
+    }
+}
+--------------------------------------------------------------------------------------
+import java.util.Arrays;
+import java.util.Scanner;
+
+class CricketPlayer {
+    String name;
+    int no_of_innings;
+    int no_of_times_notout;
+    int total_runs;
+    double bat_avg;
+
+    // Constructor
+    public CricketPlayer(String name, int no_of_innings, int no_of_times_notout, int total_runs) {
+        this.name = name;
+        this.no_of_innings = no_of_innings;
+        this.no_of_times_notout = no_of_times_notout;
+        this.total_runs = total_runs;
+        this.bat_avg = avg(total_runs, no_of_innings, no_of_times_notout);
+    }
+
+    // Static method to calculate batting average
+    public static double avg(int total_runs, int no_of_innings, int no_of_times_notout) {
+        if (no_of_innings == 0) {
+            return 0.0; // Avoid division by zero
+        }
+        return ((double) total_runs / no_of_innings);
+    }
+
+    // Static method to sort CricketPlayer array based on batting average
+    public static void sort(CricketPlayer[] players) {
+        Arrays.sort(players, (a, b) -> Double.compare(b.bat_avg, a.bat_avg));
+    }
+
+    // Display player details
+    public void displayPlayerDetails() {
+        System.out.println("Name: " + name);
+        System.out.println("Batting Average: " + bat_avg);
+        System.out.println("-----------------------------");
+    }
+}
+
+public class CricketPlayerSort {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of players: ");
+        int n = scanner.nextInt();
+
+        // Create an array of CricketPlayer objects
+        CricketPlayer[] players = new CricketPlayer[n];
+
+        // Input player details
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter details for player " + (i + 1) + ":");
+            System.out.print("Name: ");
+            String name = scanner.next();
+            System.out.print("Number of innings: ");
+            int innings = scanner.nextInt();
+            System.out.print("Number of times not out: ");
+            int notOut = scanner.nextInt();
+            System.out.print("Total runs: ");
+            int runs = scanner.nextInt();
+
+            players[i] = new CricketPlayer(name, innings, notOut, runs);
+        }
+
+        // Calculate batting average for each player and display details
+        for (CricketPlayer player : players) {
+            player.displayPlayerDetails();
+        }
+
+        // Sort the players based on batting average
+        CricketPlayer.sort(players);
+
+        // Display sorted player details
+        System.out.println("Player details after sorting based on batting average:");
+        for (CricketPlayer player : players) {
+            player.displayPlayerDetails();
+        }
+    }
+}

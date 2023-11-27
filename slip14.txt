@@ -1,0 +1,130 @@
+import java.util.Scanner;
+
+class NumberIsZeroException extends Exception {
+    public NumberIsZeroException(String message) {
+        super(message);
+    }
+}
+
+public class PrimeNumberChecker {
+    // Method to check if a number is prime
+    private static boolean isPrime(int number) {
+        if (number <= 1) {
+            return false;
+        }
+
+        for (int i = 2; i <= Math.sqrt(number); i++) {
+            if (number % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            // Accept a number from the user
+            System.out.print("Enter a number: ");
+            int number = scanner.nextInt();
+
+            // Check if the number is zero and throw an exception if so
+            if (number == 0) {
+                throw new NumberIsZeroException("Number is 0");
+            }
+
+            // Check if the number is prime
+            if (isPrime(number)) {
+                System.out.println(number + " is a prime number.");
+            } else {
+                System.out.println(number + " is not a prime number.");
+            }
+
+        } catch (NumberIsZeroException e) {
+            System.out.println("Exception: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+}
+-------------------------------------------------------------------------------------
+package SY;
+
+public class SYMarks {
+    protected int computerTotal;
+    protected int mathsTotal;
+    protected int electronicsTotal;
+
+    public SYMarks(int computerTotal, int mathsTotal, int electronicsTotal) {
+        this.computerTotal = computerTotal;
+        this.mathsTotal = mathsTotal;
+        this.electronicsTotal = electronicsTotal;
+    }
+}
+---------
+package TY;
+
+public class TYMarks {
+    protected int theory;
+    protected int practicals;
+
+    public TYMarks(int theory, int practicals) {
+        this.theory = theory;
+        this.practicals = practicals;
+    }
+}
+------------
+import SY.SYMarks;
+import TY.TYMarks;
+
+public class Student {
+    private int rollNumber;
+    private String name;
+    private SYMarks syMarks;
+    private TYMarks tyMarks;
+
+    public Student(int rollNumber, String name, SYMarks syMarks, TYMarks tyMarks) {
+        this.rollNumber = rollNumber;
+        this.name = name;
+        this.syMarks = syMarks;
+        this.tyMarks = tyMarks;
+    }
+
+    public void calculateGradeAndDisplayResult() {
+        int totalComputerMarks = syMarks.computerTotal + tyMarks.theory;
+        
+        System.out.println("Roll Number: " + rollNumber);
+        System.out.println("Name: " + name);
+        System.out.println("Total Computer Marks: " + totalComputerMarks);
+
+        // Calculate Grade based on total marks
+        if (totalComputerMarks >= 70) {
+            System.out.println("Grade: A");
+        } else if (totalComputerMarks >= 60) {
+            System.out.println("Grade: B");
+        } else if (totalComputerMarks >= 50) {
+            System.out.println("Grade: C");
+        } else if (totalComputerMarks >= 40) {
+            System.out.println("Pass Class");
+        } else {
+            System.out.println("Grade: FAIL");
+        }
+
+        System.out.println("----------------------------");
+    }
+
+    public static void main(String[] args) {
+        // Create 'n' objects of Student class
+        Student student1 = new Student(1, "John", new SYMarks(80, 75, 85), new TYMarks(65, 70));
+        Student student2 = new Student(2, "Alice", new SYMarks(70, 65, 75), new TYMarks(60, 68));
+        Student student3 = new Student(3, "Bob", new SYMarks(55, 60, 65), new TYMarks(75, 80));
+
+        // Display results for each student
+        student1.calculateGradeAndDisplayResult();
+        student2.calculateGradeAndDisplayResult();
+        student3.calculateGradeAndDisplayResult();
+    }
+}

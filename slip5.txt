@@ -1,0 +1,159 @@
+class Continent {
+    String continentName;
+
+    public Continent(String continentName) {
+        this.continentName = continentName;
+    }
+
+    public void displayContinent() {
+        System.out.println("Continent: " + continentName);
+    }
+}
+
+class Country extends Continent {
+    String countryName;
+
+    public Country(String continentName, String countryName) {
+        super(continentName);
+        this.countryName = countryName;
+    }
+
+    public void displayCountry() {
+        displayContinent();
+        System.out.println("Country: " + countryName);
+    }
+}
+
+class State extends Country {
+    String stateName;
+
+    public State(String continentName, String countryName, String stateName) {
+        super(continentName, countryName);
+        this.stateName = stateName;
+    }
+
+    public void displayState() {
+        displayCountry();
+        System.out.println("State: " + stateName);
+    }
+}
+
+public class PlaceHierarchy {
+    public static void main(String[] args) {
+        // Create objects and display hierarchy
+        State state = new State("Asia", "India", "Maharashtra");
+        state.displayState();
+    }
+}
+--------------------------------------------------------------------------------------------------------
+import java.util.Scanner;
+
+public class MatrixOperations {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Matrix Operations Menu:");
+            System.out.println("1. Matrix Addition");
+            System.out.println("2. Matrix Multiplication");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice (1-3): ");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    matrixAddition();
+                    break;
+                case 2:
+                    matrixMultiplication();
+                    break;
+                case 3:
+                    System.out.println("Exiting program. Goodbye!");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please enter a number between 1 and 3.");
+            }
+        }
+    }
+
+    private static void matrixAddition() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Matrix Addition:");
+        System.out.print("Enter the number of rows for matrices: ");
+        int rows = scanner.nextInt();
+        System.out.print("Enter the number of columns for matrices: ");
+        int columns = scanner.nextInt();
+
+        int[][] matrix1 = inputMatrix("Enter elements for Matrix 1:", rows, columns);
+        int[][] matrix2 = inputMatrix("Enter elements for Matrix 2:", rows, columns);
+
+        int[][] resultMatrix = new int[rows][columns];
+
+        // Perform matrix addition
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                resultMatrix[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        }
+
+        displayMatrix("Resultant Matrix (Addition):", resultMatrix);
+    }
+
+    private static void matrixMultiplication() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Matrix Multiplication:");
+        System.out.print("Enter the number of rows for Matrix 1: ");
+        int rows1 = scanner.nextInt();
+        System.out.print("Enter the number of columns for Matrix 1: ");
+        int columns1 = scanner.nextInt();
+        System.out.print("Enter the number of columns for Matrix 2: ");
+        int columns2 = scanner.nextInt();
+
+        int[][] matrix1 = inputMatrix("Enter elements for Matrix 1:", rows1, columns1);
+        int[][] matrix2 = inputMatrix("Enter elements for Matrix 2:", columns1, columns2);
+
+        int[][] resultMatrix = new int[rows1][columns2];
+
+        // Perform matrix multiplication
+        for (int i = 0; i < rows1; i++) {
+            for (int j = 0; j < columns2; j++) {
+                for (int k = 0; k < columns1; k++) {
+                    resultMatrix[i][j] += matrix1[i][k] * matrix2[k][j];
+                }
+            }
+        }
+
+        displayMatrix("Resultant Matrix (Multiplication):", resultMatrix);
+    }
+
+    private static int[][] inputMatrix(String prompt, int rows, int columns) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(prompt);
+
+        int[][] matrix = new int[rows][columns];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                System.out.print("Enter element at position (" + (i + 1) + ", " + (j + 1) + "): ");
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+
+        return matrix;
+    }
+
+    private static void displayMatrix(String message, int[][] matrix) {
+        System.out.println(message);
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(matrix[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+}
+

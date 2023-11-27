@@ -1,0 +1,104 @@
+// Abstract class Bank
+abstract class Bank {
+    // Abstract method to get the balance
+    public abstract int getBalance();
+}
+
+// Subclass BankA extending Bank
+class BankA extends Bank {
+    private int balance = 100;
+
+    // Implementation of getBalance for BankA
+    @Override
+    public int getBalance() {
+        return balance;
+    }
+}
+
+// Subclass BankB extending Bank
+class BankB extends Bank {
+    private int balance = 150;
+
+    // Implementation of getBalance for BankB
+    @Override
+    public int getBalance() {
+        return balance;
+    }
+}
+
+// Subclass BankC extending Bank
+class BankC extends Bank {
+    private int balance = 200;
+
+    // Implementation of getBalance for BankC
+    @Override
+    public int getBalance() {
+        return balance;
+    }
+}
+
+public class BankExample {
+    public static void main(String[] args) {
+        // Create objects of each subclass
+        BankA bankA = new BankA();
+        BankB bankB = new BankB();
+        BankC bankC = new BankC();
+
+        // Call getBalance for each bank and display the result
+        System.out.println("Balance in Bank A: Rs." + bankA.getBalance());
+        System.out.println("Balance in Bank B: Rs." + bankB.getBalance());
+        System.out.println("Balance in Bank C: Rs." + bankC.getBalance());
+    }
+}
+------------------------------------------------------------------------------------
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+class slip24 extends JPanel {
+
+    private int centerX, centerY;
+    private int[] radii = {40, 30, 20}; // Different radii for concentric circles
+
+    public slip24() {
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent me) {
+                centerX = getWidth() / 2;
+                centerY = getHeight() / 2;
+                repaint(); // Repaint when the mouse is pressed
+            }
+        });
+    }
+
+    private void drawConcentricCircles(Graphics g, int x, int y, int[] radii) {
+        for (int radius : radii) {
+            g.setColor(getRandomColor());
+            g.fillOval(x - radius, y - radius, 2 * radius, 2 * radius);
+        }
+    }
+
+    private Color getRandomColor() {
+        float r = (float) Math.random();
+        float g = (float) Math.random();
+        float b = (float) Math.random();
+        return new Color(r, g, b);
+    }
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawConcentricCircles(g, centerX, centerY, radii);
+    }
+
+    public static void main(String[] args) {
+        JFrame newFrame = new JFrame("Concentric Circles");
+        Ovals ovalsPanel = new Ovals();
+        newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        newFrame.add(ovalsPanel);
+        newFrame.setSize(550, 550);
+        newFrame.setVisible(true);
+    }
+}

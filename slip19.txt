@@ -1,0 +1,120 @@
+import java.util.Scanner;
+
+public class DiagonalSum {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input the number of rows and columns
+        System.out.print("Enter the number of rows: ");
+        int rows = scanner.nextInt();
+        System.out.print("Enter the number of columns: ");
+        int columns = scanner.nextInt();
+
+        // Create a two-dimensional array
+        int[][] matrix = new int[rows][columns];
+
+        // Input elements of the array
+        System.out.println("Enter the elements of the array:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                System.out.print("Enter element at position (" + i + ", " + j + "): ");
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+
+        // Display the input array
+        System.out.println("Entered Matrix:");
+        displayMatrix(matrix);
+
+        // Calculate and display the sum of diagonal elements
+        int diagonalSum = calculateDiagonalSum(matrix);
+        System.out.println("Sum of Diagonal Elements: " + diagonalSum);
+
+        scanner.close();
+    }
+
+    // Method to display the elements of a matrix
+    private static void displayMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    // Method to calculate the sum of diagonal elements
+    private static int calculateDiagonalSum(int[][] matrix) {
+        int sum = 0;
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+
+        // Ensure the matrix is square (number of rows = number of columns)
+        if (rows == columns) {
+            for (int i = 0; i < rows; i++) {
+                sum += matrix[i][i]; // Sum the diagonal elements
+            }
+        } else {
+            System.out.println("Matrix is not square. Diagonal sum cannot be calculated.");
+        }
+
+        return sum;
+    }
+}
+------------------------------------------------------------------------------------------------------
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SubjectComboBoxDemo extends JFrame {
+    private JComboBox<String> subjectComboBox;
+    private JTextField selectedSubjectTextField;
+
+    public SubjectComboBoxDemo() {
+        // Set layout to null for manual component placement
+        setLayout(null);
+
+        // Create and place combo box
+        String[] subjects = {"Advanced Java", "Data Structures", "Software Engineering", "Computer Networks", "Artificial Intelligence"};
+        subjectComboBox = new JComboBox<>(subjects);
+        subjectComboBox.setBounds(50, 30, 200, 30);
+
+        // Create and place text field
+        selectedSubjectTextField = new JTextField();
+        selectedSubjectTextField.setBounds(50, 70, 200, 30);
+        selectedSubjectTextField.setEditable(false);
+
+        // Attach ActionListener to combo box
+        subjectComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displaySelectedSubject();
+            }
+        });
+
+        // Add components to the frame
+        add(subjectComboBox);
+        add(selectedSubjectTextField);
+
+        // Set frame properties
+        setTitle("Subject Combo Box Demo");
+        setSize(300, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void displaySelectedSubject() {
+        String selectedSubject = (String) subjectComboBox.getSelectedItem();
+        selectedSubjectTextField.setText("Selected Subject: " + selectedSubject);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new SubjectComboBoxDemo();
+            }
+        });
+    }
+}

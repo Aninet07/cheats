@@ -1,0 +1,141 @@
+import java.util.Scanner;
+
+class Clock {
+    private int hours;
+    private int minutes;
+    private int seconds;
+    private boolean isAM;
+
+    // Default constructor
+    public Clock() {
+        this.hours = 0;
+        this.minutes = 0;
+        this.seconds = 0;
+        this.isAM = true;
+    }
+
+    // Parameterized constructor to set time
+    public Clock(int hours, int minutes, int seconds) {
+        if (isValidTime(hours, minutes, seconds)) {
+            this.hours = hours;
+            this.minutes = minutes;
+            this.seconds = seconds;
+            this.isAM = true; // Default to AM mode
+        } else {
+            System.out.println("Invalid time. Setting default time to 00:00:00 AM.");
+            this.hours = 0;
+            this.minutes = 0;
+            this.seconds = 0;
+            this.isAM = true;
+        }
+    }
+
+    // Method to check the validity of time
+    private boolean isValidTime(int hours, int minutes, int seconds) {
+        return (hours >= 0 && hours < 24) && (minutes >= 0 && minutes < 60) && (seconds >= 0 && seconds < 60);
+    }
+
+    // Method to set time to AM/PM mode
+    public void setTimeToAMPM(int hours) {
+        if (hours >= 12) {
+            isAM = false;
+        } else {
+            isAM = true;
+        }
+    }
+
+    // Method to display the time
+    public void displayTime() {
+        System.out.printf("Time: %02d:%02d:%02d %s\n", hours, minutes, seconds, isAM ? "AM" : "PM");
+    }
+}
+
+public class ClockExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input hours, minutes, and seconds
+        System.out.print("Enter hours: ");
+        int hours = scanner.nextInt();
+        System.out.print("Enter minutes: ");
+        int minutes = scanner.nextInt();
+        System.out.print("Enter seconds: ");
+        int seconds = scanner.nextInt();
+
+        // Create a Clock object
+        Clock myClock = new Clock(hours, minutes, seconds);
+
+        // Display the time
+        myClock.displayTime();
+
+        scanner.close();
+    }
+}
+-----------------------------------------------------------------------------------------
+// Marker interface
+interface Displayable {
+    // Marker interface does not contain any methods
+}
+
+// Product class implementing Displayable interface
+class Product implements Displayable {
+    private int productId;
+    private String productName;
+    private double productCost;
+    private int productQuantity;
+
+    // Default constructor
+    public Product() {
+    }
+
+    // Parameterized constructor
+    public Product(int productId, String productName, double productCost, int productQuantity) {
+        this.productId = productId;
+        this.productName = productName;
+        this.productCost = productCost;
+        this.productQuantity = productQuantity;
+    }
+
+    // Display method to show the content of the object
+    public void display() {
+        System.out.println("Product ID: " + productId);
+        System.out.println("Product Name: " + productName);
+        System.out.println("Product Cost: " + productCost);
+        System.out.println("Product Quantity: " + productQuantity);
+        System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Creating objects of class Product
+        Product product1 = new Product(1, "Laptop", 1200.0, 5);
+        Product product2 = new Product(2, "Smartphone", 500.0, 10);
+        Product product3 = new Product(3, "Headphones", 50.0, 20);
+
+        // Displaying the contents of each object
+        System.out.println("Product 1:");
+        product1.display();
+
+        System.out.println("Product 2:");
+        product2.display();
+
+        System.out.println("Product 3:");
+        product3.display();
+
+        // Displaying the object count
+        int objectCount = countObjects(product1, product2, product3);
+        System.out.println("Object Count: " + objectCount);
+    }
+
+    // Method to count the number of objects that implement the Displayable interface
+    private static int countObjects(Displayable... displayables) {
+        int count = 0;
+        for (Displayable displayable : displayables) {
+            if (displayable instanceof Product) {
+                count++;
+            }
+        }
+        return count;
+    }
+}

@@ -1,0 +1,141 @@
+// Abstract class Shape
+abstract class Shape {
+    protected int side1;
+    protected int side2;
+
+    // Parameterized constructor for Shape class
+    public Shape(int side1, int side2) {
+        this.side1 = side1;
+        this.side2 = side2;
+    }
+
+    // Abstract method to print the area
+    public abstract void printArea();
+}
+
+// Rectangle class extending Shape
+class Rectangle extends Shape {
+    // Parameterized constructor for Rectangle class
+    public Rectangle(int length, int width) {
+        super(length, width);
+    }
+
+    // Override the printArea method for Rectangle
+    @Override
+    public void printArea() {
+        int area = side1 * side2;
+        System.out.println("Area of Rectangle: " + area);
+    }
+}
+
+// Triangle class extending Shape
+class Triangle extends Shape {
+    // Parameterized constructor for Triangle class
+    public Triangle(int base, int height) {
+        super(base, height);
+    }
+
+    // Override the printArea method for Triangle
+    @Override
+    public void printArea() {
+        double area = 0.5 * side1 * side2;
+        System.out.println("Area of Triangle: " + area);
+    }
+}
+
+// Circle class extending Shape
+class Circle extends Shape {
+    // Parameterized constructor for Circle class
+    public Circle(int radius) {
+        super(radius, 0); // Here, side1 is used for radius, and side2 is not used (set to 0)
+    }
+
+    // Override the printArea method for Circle
+    @Override
+    public void printArea() {
+        double area = Math.PI * side1 * side1;
+        System.out.println("Area of Circle: " + area);
+    }
+}
+
+public class ShapeExample {
+    public static void main(String[] args) {
+        // Create objects of each shape
+        Rectangle rectangle = new Rectangle(5, 8);
+        Triangle triangle = new Triangle(4, 6);
+        Circle circle = new Circle(3);
+
+        // Print the area of each shape
+        rectangle.printArea();
+        triangle.printArea();
+        circle.printArea();
+    }
+}
+--------------------------------------------------------------------------------------
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class MouseEventDemo extends Frame {
+
+    public MouseEventDemo() {
+        // Set frame properties
+        setTitle("Mouse Events Demo");
+        setSize(400, 300);
+        setLocationRelativeTo(null);
+
+        // Add mouse adapter to handle mouse events
+        addMouseListener(new CustomMouseAdapter());
+
+        // Set default close operation
+        setDefaultCloseOperation(Frame.EXIT_ON_CLOSE);
+
+        // Make the frame visible
+        setVisible(true);
+    }
+
+    // Custom MouseAdapter to handle mouse events
+    private class CustomMouseAdapter extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            displayEventName("Mouse Clicked");
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            displayEventName("Mouse Pressed");
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            displayEventName("Mouse Released");
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            displayEventName("Mouse Entered");
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            displayEventName("Mouse Exited");
+        }
+    }
+
+    // Display the event name at the center of the window in red
+    private void displayEventName(String eventName) {
+        Graphics g = getGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getWidth(), getHeight()); // Clear the window
+        g.setColor(Color.RED);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        FontMetrics fontMetrics = g.getFontMetrics();
+        int x = (getWidth() - fontMetrics.stringWidth(eventName)) / 2;
+        int y = (getHeight() + fontMetrics.getAscent()) / 2;
+        g.drawString(eventName, x, y);
+    }
+
+    public static void main(String[] args) {
+        new MouseEventDemo();
+    }
+}

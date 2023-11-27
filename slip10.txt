@@ -1,0 +1,86 @@
+@FunctionalInterface
+interface CubeCalculator {
+    int calculateCube(int number);
+}
+
+public class CubeFinder {
+    public static void main(String[] args) {
+        // Example: Find the cube of the number 5
+        int number = 5;
+
+        // Using lambda expression to implement the functional interface
+        CubeCalculator cubeCalculator = n -> n * n * n;
+
+        // Calculate and display the cube
+        int result = cubeCalculator.calculateCube(number);
+        System.out.println("The cube of " + number + " is: " + result);
+    }
+}
+-----------------------------------------------------------------------------
+package student;
+
+public class StudentInfo {
+    private int rollNo;
+    private String studentClass;
+    private double percentage;
+
+    public StudentInfo(int rollNo, String studentClass, double percentage) {
+        this.rollNo = rollNo;
+        this.studentClass = studentClass;
+        this.percentage = percentage;
+    }
+
+    public void displayInfo() {
+        System.out.println("Roll No: " + rollNo);
+        System.out.println("Class: " + studentClass);
+        System.out.println("Percentage: " + percentage + "%");
+    }
+}
+
+
+----
+package student;
+
+import java.util.Scanner;
+
+public class StudentPer {
+    public static double calculatePercentage(int[] marks) {
+        int totalMarks = 0;
+        for (int mark : marks) {
+            totalMarks += mark;
+        }
+
+        return (double) totalMarks / marks.length;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter Roll No: ");
+        int rollNo = scanner.nextInt();
+
+        scanner.nextLine(); // Consume the newline character
+
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Class: ");
+        String studentClass = scanner.nextLine();
+
+        System.out.println("Enter Marks for 6 Subjects:");
+        int[] marks = new int[6];
+        for (int i = 0; i < 6; i++) {
+            System.out.print("Enter Marks for Subject " + (i + 1) + ": ");
+            marks[i] = scanner.nextInt();
+        }
+
+        double percentage = calculatePercentage(marks);
+
+        // Creating an object of StudentInfo class to display information
+        StudentInfo studentInfo = new StudentInfo(rollNo, studentClass, percentage);
+
+        // Displaying student information
+        System.out.println("\nStudent Information:");
+        studentInfo.displayInfo();
+    }
+}

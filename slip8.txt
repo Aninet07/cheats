@@ -1,0 +1,78 @@
+import java.util.Scanner;
+
+class Sphere {
+    private double radius;
+
+    // Constructor
+    public Sphere(double radius) {
+        this.radius = radius;
+    }
+
+    // Method to calculate the surface area of the sphere
+    public double calculateSurfaceArea() {
+        return 4 * Math.PI * Math.pow(radius, 2);
+    }
+
+    // Method to calculate the volume of the sphere
+    public double calculateVolume() {
+        return (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);
+    }
+}
+
+public class SphereExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input the radius of the sphere
+        System.out.print("Enter the radius of the sphere: ");
+        double radius = scanner.nextDouble();
+
+        // Create a Sphere object
+        Sphere mySphere = new Sphere(radius);
+
+        // Calculate and display the surface area and volume
+        double surfaceArea = mySphere.calculateSurfaceArea();
+        double volume = mySphere.calculateVolume();
+
+        System.out.println("Surface Area of the Sphere: " + surfaceArea);
+        System.out.println("Volume of the Sphere: " + volume);
+
+        scanner.close();
+    }
+}
+----------------------------------------------------------------------------------
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class MouseEventExample {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Mouse Events Example");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(400, 300);
+
+            JPanel panel = new JPanel();
+            JTextField textField = new JTextField(20);
+
+            panel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    // Update text field with mouse position on mouse move
+                    textField.setText("Mouse Moved: X = " + e.getX() + ", Y = " + e.getY());
+                }
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Update text field with mouse click position on mouse click
+                    textField.setText("Mouse Clicked: X = " + e.getX() + ", Y = " + e.getY());
+                }
+            });
+
+            panel.add(textField);
+            frame.getContentPane().add(BorderLayout.CENTER, panel);
+            frame.setVisible(true);
+        });
+    }
+}

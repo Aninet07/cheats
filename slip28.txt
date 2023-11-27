@@ -1,0 +1,94 @@
+import java.io.File;
+
+public class FileInfoExample {
+    public static void main(String[] args) {
+        // Read the file name from the user
+        String fileName = getFileNameFromUser();
+
+        // Create a File object with the provided file name
+        File file = new File(fileName);
+
+        // Display file information
+        displayFileInfo(file);
+    }
+
+    private static String getFileNameFromUser() {
+        // You can use any method to read input from the user (e.g., Scanner, BufferedReader).
+        // For simplicity, I'll use Scanner here.
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+        System.out.print("Enter the file name: ");
+        return scanner.nextLine();
+    }
+
+    private static void displayFileInfo(File file) {
+        // Check if the file exists
+        if (file.exists()) {
+            System.out.println("File exists: Yes");
+            System.out.println("File is readable: " + (file.canRead() ? "Yes" : "No"));
+            System.out.println("File is writable: " + (file.canWrite() ? "Yes" : "No"));
+
+            // Determine the type of file
+            if (file.isFile()) {
+                System.out.println("File type: Regular File");
+            } else if (file.isDirectory()) {
+                System.out.println("File type: Directory");
+            }
+
+            // Display the length of the file in bytes
+            System.out.println("File length (bytes): " + file.length());
+        } else {
+            System.out.println("File does not exist.");
+        }
+    }
+}
+
+---------------------------------------------------------------------------------------
+import javax.swing.*; 
+import java.util.*; 
+import java.text.*; 
+import java.awt.*; 
+import java.awt.event.*; 
+class slip28 extends KeyAdapter 
+{ 
+ JLabel l1,l2; 
+ 
+ JTextField t1,t2; 
+ slip28() 
+ { 
+ JFrame ob=new JFrame("Temperature Converter"); 
+ l1=new JLabel("Celsius"); 
+ l2=new JLabel("Fahreheit"); 
+ t1=new JTextField(10); 
+ t2=new JTextField(10); 
+ ob.add(l1); ob.add(t1); 
+ ob.add(l2); ob.add(t2); 
+ ob.setVisible(true); 
+ t1.addKeyListener(this); 
+ ob.setLayout(new FlowLayout()); 
+ ob.setSize(400,400); 
+ ob.setDefaultCloseOperation(3); 
+ } 
+ 
+ public void keyReleased(KeyEvent ke) 
+ { 
+ try 
+ { 
+ Double cels=Double.parseDouble(t1.getText()); 
+ Double S= (cels * 1.8) + 32; 
+ Formatter fob=new Formatter(); 
+ fob.format("%.2f",S); 
+ t2.setText(""+S); 
+ } 
+ catch(Exception e) 
+ { 
+ System.out.println("Enter Vaules in Box"); 
+ } 
+ 
+ } 
+ public static void main(String []args) 
+ { 
+ slip28 ob=new slip28(); 
+ Scanner sc=new Scanner(System.in); 
+ } 
+ } 
