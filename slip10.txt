@@ -84,3 +84,41 @@ public class StudentPer {
         studentInfo.displayInfo();
     }
 }
+---------------
+package student;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Accepting student details from user
+        System.out.print("Enter Roll No: ");
+        int rollno = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character left by nextInt()
+
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Class: ");
+        String studentClass = scanner.nextLine();
+
+        // Accepting marks for 6 subjects
+        double[] marks = new double[6];
+        for (int i = 0; i < 6; i++) {
+            System.out.print("Enter marks for Subject " + (i + 1) + ": ");
+            marks[i] = scanner.nextDouble();
+        }
+
+        // Creating an instance of StudentPer to calculate percentage
+        double percentage = StudentPer.calculatePercentage(marks);
+
+        // Creating an instance of StudentInfo to display information
+        StudentInfo studentInfo = new StudentInfo(rollno, name, studentClass, percentage);
+        studentInfo.displayInfo();
+
+        scanner.close();
+    }
+}
+
